@@ -20,8 +20,7 @@ COPY . .
 # Crear el entorno virtual e instalar dependencias con pip (no con uv)
 RUN python3 -m venv /app/.venv && \
     /app/.venv/bin/python -m pip install --upgrade pip && \
-    /app/.venv/bin/python -m pip install -r requirements.txt && \
-    /app/.venv/bin/python -m pip install uvicorn  # Asegurar que uvicorn está instalado
+    /app/.venv/bin/python -m pip install -r requirements.txt
 
 # Verificar que uvicorn está correctamente instalado
 RUN ls -la /app/.venv/bin && /app/.venv/bin/python -m uvicorn --version
