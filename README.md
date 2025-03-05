@@ -15,81 +15,67 @@ Este proyecto contiene un pipeline de **Machine Learning** para el preprocesamie
 
 ---
 
-## **Requerimientos Previos**
+Este proyecto contiene un entorno de desarrollo para **Machine Learning** utilizando **Docker Compose**.  
+El entorno incluye:
+✅ **JupyterLab** para la creación y entrenamiento de modelos.  
+✅ **FastAPI** para exponer los modelos como una API de predicción.  
+✅ **Carpeta compartida** entre Jupyter y FastAPI para almacenar los modelos entrenados.  
 
-Para ejecutar el proyecto, asegúrate de tener instaladas las siguientes dependencias:
+---
+
+##  **Despliegue del Entorno**  
+
+Para iniciar el entorno:  
 
 ```sh
-pip install -r requirements.txt
+docker compose up --build
 ```
+Esto descargará las imágenes necesarias y levantará los contenedores de **JupyterLab** y **FastAPI**.  
 
----
-
-## **Estructura del Proyecto**
-
-```plaintext
-📂 covertype-ml
-│── 📂 data/                     # Directorio para almacenar el dataset
-│── 📂 notebooks/                # Notebooks para exploración y análisis
-│── 📂 models/                   # Carpeta para almacenar modelos entrenados
-│── 📂 src/                      # Código fuente del proyecto
-│   ├── 📜 preprocess.py         # Script para preprocesamiento de datos
-│   ├── 📜 train.py              # Script para entrenamiento de modelos
-│   ├── 📜 predict.py            # Script para realizar predicciones
-│   ├── 📜 utils.py              # Funciones auxiliares
-│── 📜 dataset.csv               # Dataset utilizado en el proyecto
-│── 📜 requirements.txt          # Dependencias del proyecto
-│── 📜 README.md                 # Documentación del proyecto
-```
-
----
-
-## **Ejecutar el Proyecto**
-
-### 1️⃣ **Preprocesar los Datos**
-
-Ejecuta el script de preprocesamiento para generar estadísticas, validar el esquema y transformar los datos:
+Para detener los contenedores en cualquier momento, usa:  
 
 ```sh
-python src/preprocess.py
+docker compose down
 ```
 
-Este paso genera estadísticas exploratorias y detecta anomalías en los datos.
-
----
-
-### 2️⃣ **Entrenar un Modelo**
-
-Ejecuta el siguiente comando para entrenar un modelo sobre los datos preprocesados:
+Para reiniciar todo desde cero (eliminando volúmenes y datos), usa:  
 
 ```sh
-python src/train.py
-```
-
-El modelo entrenado se guardará en la carpeta `models/`.
-
----
-
-### 3️⃣ **Realizar Predicciones**
-
-Ejecuta el script de predicción con datos nuevos:
-
-```sh
-python src/predict.py --input "47.2,13.7,214.0,4925.0,1,2"
-```
-
-O puedes importar las funciones en un entorno interactivo:
-
-```python
-from src.utils import load_model, predict
-
-model = load_model("models/trained_model.pkl")
-data = [[47.2, 13.7, 214.0, 4925.0, 1, 2]]
-prediction = predict(model, data)
-print("Predicción:", prediction)
+docker compose down -v
 ```
 
 ---
+
+## 📂 **Estructura del Proyecto**  
+
+```
+📂 MLOps-Taller2
+│── 📂 jupyter_work/              # Directorio donde se guardan los notebooks
+│── 📂 models/                    # Carpeta compartida para almacenar los modelos entrenados
+│── 📂 app/                        # Carpeta con la API FastAPI
+│   ├── 📂 routes/                 # Endpoints de la API
+│   │   ├── 📜 predict.py          # Lógica de predicción y carga de modelos
+│   ├── 📜 main.py                 # Configuración principal de FastAPI
+│── 📜 docker-compose.yml          # Configuración de los servicios en Docker
+│── 📜 Dockerfile                  # Configuración de la imagen para FastAPI
+│── 📜 requirements.txt            # Dependencias del proyecto
+│── 📜 README.md                   # Documentación del proyecto
+```
+
+---
+
+##  **Acceso a JupyterLab**  
+
+Una vez que el contenedor está en ejecución, acceder a **JupyterLab** en:  
+
+🔗 **URL de acceso:**  
+```
+http://localhost:8888
+```
+El acceso está configurado para **no requerir token ni contraseña**.  
+
+---
+
 
 ## **Conclusión**
 
