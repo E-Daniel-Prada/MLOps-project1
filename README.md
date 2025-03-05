@@ -17,9 +17,38 @@ Este proyecto contiene un pipeline de **Machine Learning** para el preprocesamie
 
 Este proyecto contiene un entorno de desarrollo para **Machine Learning** utilizando **Docker Compose**.  
 El entorno incluye:
+
 ✅ **JupyterLab** para la creación y entrenamiento de modelos.  
 ✅ **FastAPI** para exponer los modelos como una API de predicción.  
 ✅ **Carpeta compartida** entre Jupyter y FastAPI para almacenar los modelos entrenados.  
+
+---
+
+## 1. Preprocesamiento de Datos
+El pipeline de preprocesamiento se encarga de limpiar, transformar y dividir los datos antes de su uso en el modelo.
+
+### Pasos del pipeline:
+1. **Carga del dataset**: Se utiliza Pandas para leer el archivo CSV.
+2. **Generación de estadísticas**: Se usa `tensorflow_data_validation` (TFDV) para obtener estadísticas descriptivas de los datos.
+3. **División de datos**: Se separa el dataset en conjuntos de entrenamiento (80%) y prueba (20%).
+4. **Inferencia de esquema**: Se infiere la estructura de los datos con TFDV.
+5. **Detección de anomalías**: Se validan los datos contra el esquema inferido para detectar inconsistencias.
+6. **Transformaciones con `tensorflow_transform` (TFT)**: Se normalizan características específicas.
+7. **Almacenamiento de los datos preprocesados**: Se guardan los conjuntos de datos transformados en archivos CSV.
+
+## 2. Entrenamiento del Modelo
+Se implementa un modelo de clasificación utilizando un **RandomForestClassifier** con preprocesamiento de características y reducción de dimensionalidad.
+
+### Pasos del modelo:
+1. **Carga del dataset**
+2. **Codificación One-Hot para variables categóricas**
+3. **Estandarización de características** con `StandardScaler`
+4. **Selección de características** con `SelectKBest`
+5. **Reducción de dimensionalidad** con PCA
+6. **División de los datos en entrenamiento y prueba**
+7. **Entrenamiento del modelo** con Random Forest
+8. **Evaluación del modelo** (precisión, recall, F1-score)
+9. **Guardado del modelo y preprocesadores** con `joblib`
 
 ---
 
